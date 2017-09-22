@@ -14,14 +14,10 @@ class MoviesController < ApplicationController
     sort = params[:sort] || session[:sort]
     @all_ratings = Movie.get_all_ratings
     @selected = params[:ratings] || session[:ratings] || {}
-    p @selected
-    p "*"*80
     
     if @selected == {}
       @all_ratings.each do |x|
-        session[:ratings][x] = 1
-        p "*"*80
-        p session[ratings]
+        @selected[x] = 1
       end
     end
     
@@ -36,7 +32,6 @@ class MoviesController < ApplicationController
     if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
       session[:sort] = sort
       session[:ratings] = @selected
-      flash.keep
       redirect_to movies_path :sort => sort, :ratings => @selected and return
     end
     

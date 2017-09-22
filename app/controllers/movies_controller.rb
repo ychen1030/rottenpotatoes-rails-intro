@@ -19,6 +19,7 @@ class MoviesController < ApplicationController
       @all_ratings.each do |x|
         session[:ratings][x] = 1
       end
+      redirect_to movies_path :sort => sort, :ratings => @selected and return
     end
     
     if sort == 'release_date'
@@ -32,7 +33,7 @@ class MoviesController < ApplicationController
     if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
       session[:sort] = sort
       session[:ratings] = @selected
-      redirect_to :sort => sort, :ratings => @selected and return
+      redirect_to movies_path :sort => sort, :ratings => @selected and return
     end
     
     @movies = Movie.where(rating: @selected.keys).order(ordering)

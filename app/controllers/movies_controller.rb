@@ -13,9 +13,9 @@ class MoviesController < ApplicationController
   def index
     sort = params[:sort] || session[:sort]
     @all_ratings = Movie.get_all_ratings
-    @selected = params[:ratings] || session[:ratings]
+    @selected = params[:ratings] || session[:ratings] || {}
     
-    if @selected == {} or @selected == nil
+    if @selected == {}
       @all_ratings.each do |x|
         session[:ratings][x] = 1
       end
